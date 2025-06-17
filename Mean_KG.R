@@ -36,7 +36,7 @@ y_train_mean_KG <- y_mean_KG[train_indices_KG]
 x_test_mean_KG <- x_mean_KG[-train_indices_KG, ]
 y_test_mean_KG <- y_mean_KG[-train_indices_KG]
 
-# Train the simple Random Forest model (no CV)
+# Train the simple Random Forest model 
 set.seed(52)
 rf_model_mean_KG <- randomForest(
   x = x_train_mean_KG,
