@@ -12,7 +12,7 @@ library(ggplot2)
 library(Metrics)
 
 # Load data
-input_csv <- "C:/Users/raiya/OneDrive/Documents/Thesis_data/Hexagon_Mean_SD_Predictors.csv"
+input_csv <- "C:/Users/raiya/OneDrive/Documents/Thesis_data/Hexagon_Mean_SD_Predictors.csv"      #Update local path 
 data_reg <- read.csv(input_csv)
 
 # Clean and preprocess the data
