@@ -34,7 +34,7 @@ x_test_mean_reg <- x_mean_reg[-train_indices_mean_reg, , drop = FALSE]
 y_train_mean_reg <- y_mean_reg[train_indices_mean_reg]
 y_test_mean_reg <- y_mean_reg[-train_indices_mean_reg]
 
-# === Train the Random Forest model ===
+# Train the Random Forest model 
 set.seed(52)
 rf_model_mean <- randomForest(
   x = x_train_mean_reg,
@@ -43,7 +43,7 @@ rf_model_mean <- randomForest(
   ntree = 500
 )
 
-# Print model summary
+
 print(rf_model_mean)
 
 # Compute PDPs for predictors
@@ -71,7 +71,7 @@ for (pred in predictors_mean_reg) {
 
 pdp_combined_mean_reg <- bind_rows(pdp_list_mean_reg)
 
-# === Normalize PDP values per predictor (min-max scaling) ===
+# Normalize PDP values per predictor (min-max scaling) 
 pdp_combined_mean_reg <- pdp_combined_mean_reg %>%
   group_by(Predictor) %>%
   mutate(
@@ -84,13 +84,13 @@ pdp_combined_mean_reg <- pdp_combined_mean_reg %>%
 
 # Save PDP CSV
 write.csv(pdp_combined_mean_reg, "Mean_PDP_Values_Combined.csv", row.names = FALSE)
-print("✅ Mean Biomass PDP values saved as Mean_PDP_Values_Combined.csv")
+print(" Mean Biomass PDP values saved as Mean_PDP_Values_Combined.csv")
 
-# === Create output folder for Mean Biomass PDP plots ===
+# Create output folder for Mean Biomass PDP plots 
 output_dir_mean_reg <- paste0(base_path, "PDP_Plots_Mean_Biomass_Normalized/")
 dir.create(output_dir_mean_reg, showWarnings = FALSE)
 
-# === Feature units mapping ===
+#  Feature units mapping 
 feature_units <- list(
   "Mean_Temp" = "℃",
   "SD_Temp" = "℃",
@@ -121,7 +121,7 @@ feature_units <- list(
   "SD_SHDI" = ""
 )
 
-# === Plot PDPs with normalized values ===
+#  Plot PDPs with normalized values 
 for (pred in unique(pdp_combined_mean_reg$Predictor)) {
   print(paste("Plotting PDP for", pred))
   
