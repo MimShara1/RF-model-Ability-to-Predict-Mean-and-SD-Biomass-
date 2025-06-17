@@ -36,7 +36,7 @@ y_train_mean_SW <- y_mean_SW[train_indices_SW]
 x_test_mean_SW <- x_mean_SW[-train_indices_SW, ]
 y_test_mean_SW <- y_mean_SW[-train_indices_SW]
 
-# Train the simple Random Forest model (no CV)
+# Train the simple Random Forest model
 set.seed(52)
 rf_model_mean_SW <- randomForest(
   x = x_train_mean_SW,
