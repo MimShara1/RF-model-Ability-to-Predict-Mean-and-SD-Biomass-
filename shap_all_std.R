@@ -23,7 +23,7 @@ predictor_vars <- c("Mean_SWF","Mean_SHDI",	"SD_SHDI",	"Mean_Elev",	"Mean_Slope"
                     "Mean_P","Mean_Soil_pote","SD_Rs","SD_P","SD_Temp", "SD_Soil_pote", "SD_Elev",	"SD_Aspect",	"SD_Slope",	
                     "Mean_Bulk_Dens",	"SD_Bulk_Dens",	"Mean_Ca_Exg",	"SD_Ca_Exg",	"Mean_Clay",	"SD_Clay",	"Mean_Sand",	"SD_Sand",	"Mean_Silt", "SD_Silt")
 
-# Check if all predictor variables exist
+# Check variables availability 
 missing_vars <- setdiff(predictor_vars, names(data))
 if (length(missing_vars) > 0) {
   stop(paste("Error: Missing variables in dataset:", paste(missing_vars, collapse = ", ")))
