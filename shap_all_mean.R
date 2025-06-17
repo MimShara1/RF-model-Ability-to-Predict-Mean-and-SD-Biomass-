@@ -26,7 +26,7 @@ predictor_vars <- c("Mean_SWF", "Mean_SHDI", "SD_SHDI", "Mean_Elev", "Mean_Slope
                     "SD_Soil_pote", "SD_Elev", "SD_Aspect", "SD_Slope", "Mean_Bulk_Dens", "SD_Bulk_Dens",
                     "Mean_Ca_Exg", "SD_Ca_Exg", "Mean_Clay", "SD_Clay", "Mean_Sand", "SD_Sand", "Mean_Silt", "SD_Silt")
 
-# Check if all predictor variables are present
+# Checks predictors availability 
 missing_vars <- setdiff(predictor_vars, names(data))
 if (length(missing_vars) > 0) {
   stop(paste("Error: Missing variables in dataset:", paste(missing_vars, collapse = ", ")))
@@ -37,7 +37,7 @@ X <- data[, predictor_vars]
 y <- data$Mean_Biomass
 y <- as.numeric(y)
 
-# Train Random Forest model for Mean_Biomass
+# Train Random Forest model
 set.seed(52)
 rf_model <- randomForest(X, y, importance = TRUE, ntree = 500)
 print(rf_model )
