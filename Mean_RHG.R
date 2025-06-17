@@ -38,7 +38,7 @@ y_train_mean_RHG <- y_mean_RHG[train_indices_RHG]
 x_test_mean_RHG <- x_mean_RHG[-train_indices_RHG, ]
 y_test_mean_RHG <- y_mean_RHG[-train_indices_RHG]
 
-# Train the simple Random Forest model (no CV)
+# Train the simple Random Forest model
 set.seed(52)
 rf_model_mean_RHG <- randomForest(
   x = x_train_mean_RHG,
@@ -47,7 +47,7 @@ rf_model_mean_RHG <- randomForest(
   ntree = 500
 )
 
-# Print model summary
+
 print(rf_model_mean_RHG)
 
 # Extract and normalize variable importance
