@@ -4,19 +4,19 @@ library(dplyr)
 library(ggplot2)
 library(caret)
 
-# === Set base path and working directory ===
+# Set base path and working directory 
 base_path <- "C:/Users/raiya/OneDrive/Documents/Thesis_data/"
 setwd(base_path)
 
-# === Load dataset ===
+# Load dataset 
 data_reg <- read.csv(paste0(base_path, "Hexagon_Mean_SD_predictors.csv"))
 
-# === Clean and preprocess the data ===
+# Clean and preprocess the data 
 data_cleaned_reg <- data_reg %>%
   select(-c(Mean_Biomass, GRID_ID)) %>%  # Remove Mean_Biomass and GRID_ID columns
   na.omit()                             # Remove rows with NA values
 
-# === Separate features and target ===
+# Separate features and target 
 target_var_reg <- "SD_Biomass"
 predictors_reg <- setdiff(names(data_cleaned_reg), target_var_reg)
 
@@ -24,7 +24,7 @@ predictors_reg <- setdiff(names(data_cleaned_reg), target_var_reg)
 x_sd_reg <- data_cleaned_reg[, predictors_reg]
 y_sd_reg <- data_cleaned_reg[[target_var_reg]]
 
-# === Train-test split (80/20) ===
+# Train-test split (80/20) 
 set.seed(52)
 train_indices_sd_reg <- createDataPartition(y_sd_reg, p = 0.8, list = FALSE)
 
@@ -34,7 +34,7 @@ x_test_sd_reg <- x_sd_reg[-train_indices_sd_reg, , drop = FALSE]
 y_train_sd_reg <- y_sd_reg[train_indices_sd_reg]
 y_test_sd_reg <- y_sd_reg[-train_indices_sd_reg]
 
-# === Train the Random Forest model ===
+# Train the Random Forest model 
 set.seed(52)
 rf_model_sd <- randomForest(
   x = x_train_sd_reg,
@@ -43,10 +43,9 @@ rf_model_sd <- randomForest(
   ntree = 500
 )
 
-# Print model summary
 print(rf_model_sd)
 
-# === Compute PDPs for predictors ===
+# Compute PDPs for predictors 
 predictors_sd_reg <- colnames(x_train_sd_reg)
 pdp_list_sd_reg <- list()
 
@@ -71,7 +70,7 @@ for (pred in predictors_sd_reg) {
 
 pdp_combined_sd_reg <- bind_rows(pdp_list_sd_reg)
 
-# === Normalize PDP values per predictor (min-max scaling) ===
+# Normalize PDP values per predictor (min-max scaling) 
 pdp_combined_sd_reg <- pdp_combined_sd_reg %>%
   group_by(Predictor) %>%
   mutate(
@@ -82,15 +81,15 @@ pdp_combined_sd_reg <- pdp_combined_sd_reg %>%
   select(Predictor, Predictor_Value, PDP_Value_Normalized) %>%
   rename(PDP_Value = PDP_Value_Normalized)
 
-# === Save PDP CSV ===
+# Save PDP CSV 
 write.csv(pdp_combined_sd_reg, "SD_PDP_Values_Combined.csv", row.names = FALSE)
-print("✅ SD Biomass PDP values saved as SD_PDP_Values_Combined.csv")
+print(" SD Biomass PDP values saved as SD_PDP_Values_Combined.csv")
 
-# === Create output folder for SD Biomass PDP plots ===
+# Create output folder for SD Biomass PDP plots 
 output_dir_sd_reg <- paste0(base_path, "PDP_Plots_SD_Biomass_Normalized/")
 dir.create(output_dir_sd_reg, showWarnings = FALSE)
 
-# === Feature units mapping ===
+#  Feature units mapping 
 feature_units <- list(
   "Mean_Temp" = "℃",
   "SD_Temp" = "℃",
@@ -121,7 +120,7 @@ feature_units <- list(
   "SD_SHDI" = ""
 )
 
-# === Plot PDPs with normalized values ===
+#  Plot PDPs with normalized values 
 for (pred in unique(pdp_combined_sd_reg$Predictor)) {
   print(paste("Plotting PDP for", pred))
   
