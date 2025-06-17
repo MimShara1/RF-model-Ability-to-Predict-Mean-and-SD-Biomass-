@@ -12,7 +12,7 @@ library(ggplot2)
 library(Metrics)
 
 # Load data for district HAS
-input_csv_HAS <- "C:/Users/raiya/OneDrive/Documents/Thesis_data/HAS_data.csv"
+input_csv_HAS <- "C:/Users/raiya/OneDrive/Documents/Thesis_data/HAS_data.csv"  #update the local path 
 data_HAS <- read.csv(input_csv_HAS)
 
 # Clean and preprocess the data
@@ -36,7 +36,7 @@ y_train_mean_HAS <- y_mean_HAS[train_indices_HAS]
 x_test_mean_HAS <- x_mean_HAS[-train_indices_HAS, ]
 y_test_mean_HAS <- y_mean_HAS[-train_indices_HAS]
 
-# Train the Random Forest model (no CV)
+# Train the Random Forest model 
 set.seed(52)
 rf_model_mean_HAS <- randomForest(
   x = x_train_mean_HAS,
@@ -142,5 +142,5 @@ ggplot(validation_data_mean_HAS, aes(x = Actual, y = Predicted)) +
            hjust = 1, size = 5, color = "black")
 
 # Save the validation plot
-ggsave("C:/Users/raiya/OneDrive/Documents/Thesis_data/val_mean_HAS.png", 
+# ggsave("C:/Users/raiya/OneDrive/Documents/Thesis_data/val_mean_HAS.png",  
        width = 15, height = 15, units ='cm', dpi = 300)
